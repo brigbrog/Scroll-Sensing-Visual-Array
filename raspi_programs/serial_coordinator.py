@@ -10,7 +10,7 @@ from collections import deque
 import serial
 from gpiozero import OutputDevice
 from flux_led import WifiLedBulb
-from random import shuffle
+from random import shuffle, seed
 from time import sleep, time
 import pygame
 import os
@@ -82,16 +82,15 @@ def freq_audio(code):
         pygame.mixer.music.load('/home/bgbrog26/Desktop/SMGS/beep1.mp3')
     pygame.mixer.music.play()
 
-
 def participant_op(base_dir,
                    dur,
                    ID,
                    save_df: pd.DataFrame,
                    save
-                   #cont_type
                    ):
     #ID = run(2)+part(2)
     #dur = 150 -> 2.5 mins
+
     print(f"Starting Run with ID: {ID}")
     run_code = ID[:2]
     part_code = ID[2:]
@@ -106,8 +105,6 @@ def participant_op(base_dir,
     seq.extend(fric_list)
 
     print(f"Running participant {part_code} with sequence {seq}")
-
-    
 
     for i, des_fric in enumerate(seq):
         event_buffer = deque(maxlen=10)
@@ -173,8 +170,8 @@ def participant_op(base_dir,
                 
 
 if __name__ == "__main__":
-
-    #ID = run(2)+part(2)
+    #set random seed
+    seed(42)
 
     #pygame audio init
     pygame.init()
@@ -188,10 +185,10 @@ if __name__ == "__main__":
     
     run_code = str(out_dir_len) if out_dir_len > 10 else '0' + str(out_dir_len)
     
-    ID_init = run_code + '00'
+    ID_init = run_code + '00' # ID is run code + participant code
     
     scroll_df = participant_op(out_dir,
-                                2,
+                                120,
                                 ID_init,
                                 scroll_df,
                                 save_run)
