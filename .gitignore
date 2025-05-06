@@ -1,1 +1,6 @@
 raspi_programs/raspi_output
+analysis/edited
+analysis/finalized
+analysis/raw
+analysis/analysis_no_arrs.csv
+analysis/stat_notebook
